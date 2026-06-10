@@ -1,0 +1,26 @@
+# Air live-reload config. Run `air` from the backend/ directory.
+# Docs: https://github.com/air-verse/air
+
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  # Build the root package (main.go lives here, not in ./cmd/server).
+  cmd = "go build -o ./tmp/server ."
+  bin = "./tmp/server"
+  # Watch these extensions; rebuild on change.
+  include_ext = ["go"]
+  # Don't watch generated, vendor, or temp dirs.
+  exclude_dir = ["tmp", "bin", "db", "vendor"]
+  # Skip test files so saving a _test.go file doesn't restart the server.
+  exclude_regex = ["_test.go"]
+  # Wait 1s after a change before rebuilding (debounce rapid saves).
+  delay = 1000
+  stop_on_error = true
+
+[log]
+  time = true
+
+[misc]
+  # Delete the tmp/ binary on exit.
+  clean_on_exit = true

@@ -6,6 +6,7 @@
 # Go build artifacts
 /backend/bin/
 /backend/server
+/backend/tmp/
 *.test
 *.out
 

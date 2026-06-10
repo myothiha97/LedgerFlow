@@ -7,10 +7,13 @@ MIGRATIONS := $(BACKEND)/db/migrations
 # Read from your shell env / .env; falls back to the local docker-compose DSN.
 DATABASE_URL ?= postgres://ledgerflow:ledgerflow@localhost:5432/ledgerflow?sslmode=disable
 
-.PHONY: dev build test generate tidy db-up db-down migrate-up migrate-down
+.PHONY: dev watch build test generate tidy db-up db-down migrate-up migrate-down
 
 dev: ## Run the API on the host (Postgres must be up: make db-up)
 	cd $(BACKEND) && go run ./cmd/server
+
+watch: ## Run the API with live reload (requires air: go install github.com/air-verse/air@latest)
+	cd $(BACKEND) && air
 
 build: ## Compile the server binary to backend/bin/server
 	cd $(BACKEND) && go build -o bin/server ./cmd/server
