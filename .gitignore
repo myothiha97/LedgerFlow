@@ -1,0 +1,17 @@
+# Env / secrets — real values never get committed.
+.env
+*.env
+!.env.example
+
+# Go build artifacts
+/backend/bin/
+/backend/server
+*.test
+*.out
+
+# OS / editor
+.DS_Store
+
+# Frontend (added later)
+/frontend/node_modules/
+/frontend/dist/

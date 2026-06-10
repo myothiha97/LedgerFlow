@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: ledgerflow-db
+    environment:
+      POSTGRES_USER: ledgerflow
+      POSTGRES_PASSWORD: ledgerflow
+      POSTGRES_DB: ledgerflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - ledgerflow_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ledgerflow -d ledgerflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+    container_name: ledgerflow-backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PORT: "8080"
+      APP_ENV: "dev"
+      COOKIE_SECURE: "false"
+      # Inside the compose network, reach Postgres by service name "db" (not localhost).
+      DATABASE_URL: "postgres://ledgerflow:ledgerflow@db:5432/ledgerflow?sslmode=disable"
+    ports:
+      - "8080:8080"
+
+volumes:
+  ledgerflow_pgdata:
