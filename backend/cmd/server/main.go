@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,20 +9,13 @@ import (
 func main() {
 	// Create a Gin router with default middleware (logger and recovery)
 	r := gin.Default()
-
+	r.Use(gin.Logger())
+	r.Use(gin.Recovery())
 	// Define a simple GET endpoint
 	r.GET("/ping", func(c *gin.Context) {
 		// Return JSON response
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
-		})
-	})
-
-	r.GET("/", func(c *gin.Context) {
-		fmt.Println("Hello, LedgerFlow API is running!")
-		fmt.Println("Access the API at http://localhost:4000/ping")
-		c.JSON(http.StatusOK, gin.H{
-			"message": "LedgerFlow main entry point for api services",
 		})
 	})
 
