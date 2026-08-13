@@ -1,7 +1,9 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,8 +11,6 @@ import (
 func main() {
 	// Create a Gin router with default middleware (logger and recovery)
 	r := gin.Default()
-	r.Use(gin.Logger())
-	r.Use(gin.Recovery())
 	// Define a simple GET endpoint
 	r.GET("/ping", func(c *gin.Context) {
 		// Return JSON response
@@ -19,7 +19,12 @@ func main() {
 		})
 	})
 
-	// Start server on port 8080 (default)
-	// Server will listen on 0.0.0.0:8080 (localhost:8080 on Windows)
-	r.Run(":4000")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "4000"
+	}
+
+	if err := r.Run(":" + port); err != nil {
+		log.Fatal(err)
+	}
 }
