@@ -15,11 +15,16 @@ Backend foundation.
   `{"message":"pong"}`.
 - Removed duplicate Gin logger and recovery registration. A runtime request now produces
   one access log entry.
+- The PostgreSQL 16 container starts successfully.
+- PostgreSQL was configured as a port-mapping exercise to listen on container port
+  `5000`, published as host port `6000`.
+- `pg_isready` verified the `ledgerflow` database accepts connections on container
+  port `5000`.
 
 ## Next Outcome
 
-Make local PostgreSQL configuration consistent, start the database, and verify it is
-ready before adding database code to Go.
+Normalize the PostgreSQL Compose configuration and connection URLs to one host port,
+container port, username, and password, then verify a connection from the host.
 
 ## Blockers
 
