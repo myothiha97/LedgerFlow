@@ -1,13 +1,12 @@
 services:
   db:
     image: postgres:16
-    command: ['postgres', '-c', 'port=5000']
     environment:
       POSTGRES_USER: ledgerflow
-      POSTGRES_PASSWORD: devpassword
+      POSTGRES_PASSWORD: ledgerflow
       POSTGRES_DB: ledgerflow
     ports:
-      - '6000:5000'
+      - 5432:5432
     volumes:
       - pgdata:/var/lib/postgresql/data
 

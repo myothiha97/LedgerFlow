@@ -15,16 +15,17 @@ Backend foundation.
   `{"message":"pong"}`.
 - Removed duplicate Gin logger and recovery registration. A runtime request now produces
   one access log entry.
-- The PostgreSQL 16 container starts successfully.
-- PostgreSQL was configured as a port-mapping exercise to listen on container port
-  `5000`, published as host port `6000`.
-- `pg_isready` verified the `ledgerflow` database accepts connections on container
-  port `5000`.
+- PostgreSQL 16 uses the standard `5432:5432` host-to-container mapping.
+- Compose, `.env.example`, the local `.env`, and the Makefile use database name,
+  username, and password `ledgerflow` on port `5432`.
+- `docker compose config --quiet` passes and the database container is running.
+- An authenticated `psql` connection through the published host port returns user and
+  database `ledgerflow`.
+- The existing volume password was updated without deleting its data.
 
 ## Next Outcome
 
-Normalize the PostgreSQL Compose configuration and connection URLs to one host port,
-container port, username, and password, then verify a connection from the host.
+Create the first database migration, apply it, verify the schema, and roll it back.
 
 ## Blockers
 
@@ -37,7 +38,3 @@ None.
 - Database access: `sqlc`
 - Migrations: `golang-migrate`
 - Phase 1 excludes AI features.
-
-## Parking Lot
-
-- No items yet.

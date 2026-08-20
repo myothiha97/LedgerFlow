@@ -3,7 +3,7 @@
 - **Date:** 2026-06-10
 - **Focus:** Plan the backend / server-side foundation for LedgerFlow (Phase 1). Frontend deferred.
 - **Outcome:** Setup plan agreed and saved; **implementation deferred to next session.**
-- **Full plan:** [`docs/LedgerFlow-Backend-Setup-v1.md`](../LedgerFlow-Backend-Setup-v1.md)
+- **Full plan:** `docs/LedgerFlow-Backend-Setup-v1.md` (not present in the current repository)
 
 ---
 

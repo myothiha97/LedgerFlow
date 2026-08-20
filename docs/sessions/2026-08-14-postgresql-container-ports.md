@@ -14,7 +14,7 @@
 - Compared attached `docker compose up` with detached `docker compose up -d`.
 - Learned that Compose recreates a container when its startup command changes.
 - Briefly learned how software architecture differs from infrastructure, documented in
-  `docs/architecture-vs-infrastructure.md`.
+  `docs/guides/architecture-vs-infrastructure.md`.
 
 ## Verification
 

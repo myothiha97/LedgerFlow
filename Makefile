@@ -1,7 +1,6 @@
 # LedgerFlow task runner. The Go module lives in ./backend.
 # Requires sqlc and golang-migrate on PATH (installed via `go install`; ensure
 # $(go env GOPATH)/bin is on your PATH).
-
 BACKEND := backend
 MIGRATIONS := $(BACKEND)/db/migrations
 # Read from your shell env / .env; falls back to the local docker-compose DSN.

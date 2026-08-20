@@ -28,7 +28,7 @@ the layered architecture below is implemented incrementally. The frontend has no
 
 | Area | State |
 |---|---|
-| Planning docs (BRD, Tech Spec, Architecture) | ✅ Complete — see [`docs/`](docs/) |
+| Planning docs (BRD, Tech Spec, Architecture) | ✅ Complete. See the [`docs/` index](docs/README.md) |
 | Backend foundation (Gin + Postgres) | 🚧 In progress |
 | Auth · Accounts · Categories · Transactions · Budgets · Dashboard | ⏳ Planned (Phase 1) |
 | Frontend (React SPA) | ⏳ Not started |
@@ -70,7 +70,7 @@ ledgerflow/
 │       ├── domain/       # entities, money type, lifecycle rules
 │       └── store/        # DB access; balance recalc on write
 ├── frontend/             # React SPA (package.json lives here, not at root)
-├── docs/                 # BRD, Tech Spec, Architecture Guidelines, session notes
+├── docs/                 # specifications, guides, learning notes, session state
 ├── docker-compose.yml    # local Postgres (+ optionally backend)
 ├── Makefile              # dev · test · generate · migrate · build
 └── .env.example
@@ -90,7 +90,7 @@ Five entities, one mental model:
 
 **The critical rule:** a transaction's effect on an account must be **reversed before any edit or
 delete**, or balances drift out of sync. Edits always fully reverse the old version, then apply the
-new one cleanly — never patch a balance incrementally. (See [BRD §6.2](docs/LedgerFlow-BRD-v2.md).)
+new one cleanly — never patch a balance incrementally. (See [BRD §6.2](docs/specifications/business-requirements-v2.md).)
 
 ---
 
@@ -133,7 +133,7 @@ make dev
 
 > **Note:** the backend is mid-rebuild. The current `backend/main.go` boots a minimal Gin server
 > on `:4000` (`cd backend && go run .`); the `make`-based workflow and `cmd/server` layout above
-> describe the target structure being built out per [the Tech Spec](docs/LedgerFlow-TechSpec-v1.md).
+> describe the target structure being built out per [the Tech Spec](docs/specifications/technical-specification-v1.md).
 
 ---
 
@@ -192,8 +192,9 @@ are explicitly out of Phase 1 scope.
 
 | Doc | Purpose |
 |---|---|
-| [Business Requirements (BRD v2)](docs/LedgerFlow-BRD-v2.md) | What LedgerFlow is and why — product vision, business logic, data model |
-| [Technical Specification (v1)](docs/LedgerFlow-TechSpec-v1.md) | How it's built — stack, architecture, delivery phases |
-| [Architecture Guidelines (v1)](docs/LedgerFlow-Architecture-Guidelines-v1.md) | Coding conventions and layering rules |
-| [Backend Setup (v1)](docs/LedgerFlow-Backend-Setup-v1.md) | Backend foundation plan |
-| [Backend Walkthrough (v1)](docs/LedgerFlow-Backend-Walkthrough-v1.md) | Guided tour of the backend |
+| [Documentation index](docs/README.md) | All project documentation grouped by purpose |
+| [Business Requirements (BRD v2)](docs/specifications/business-requirements-v2.md) | Product vision, business logic, and data model |
+| [Technical Specification (v1)](docs/specifications/technical-specification-v1.md) | Stack, architecture, and delivery phases |
+| [Architecture Guidelines (v1)](docs/specifications/architecture-guidelines-v1.md) | Coding conventions and layering rules |
+| [Database Design (v1)](docs/specifications/database-design-v1.md) | Schema design and balance lifecycle |
+| [Backend Walkthrough (v1)](docs/guides/backend-walkthrough-v1.md) | Guided tour of the backend |
