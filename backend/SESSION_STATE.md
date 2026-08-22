@@ -23,9 +23,16 @@ Backend foundation.
   database `ledgerflow`.
 - The existing volume password was updated without deleting its data.
 
+- Migration `0001_init` creates `users` and `sessions` and is applied. `schema_migrations`
+  reports version `1`, not dirty.
+- `\d users` and `\d sessions` confirm UUID primary keys, unique `email`, unique
+  `token_hash`, `ON DELETE CASCADE` from `sessions` to `users`, and `sessions_user_id_idx`.
+- The up and down pair is repeatable: apply, roll back to only `schema_migrations`, reapply.
+
 ## Next Outcome
 
-Create the first database migration, apply it, verify the schema, and roll it back.
+Hand-write `backend/db/queries/users.sql`, add `backend/sqlc.yaml`, and generate the
+type-safe store code into `backend/internal/store/gen` with `make generate`.
 
 ## Blockers
 
