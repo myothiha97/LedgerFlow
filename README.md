@@ -1,20 +1,20 @@
 # LedgerFlow
 
-> A personal finance tracker that turns scattered daily spending into a single, honest answer to **"Can I afford this right now?"**
+> A personal finance tracker for accurate balances, monthly spending, and budget status.
 
 LedgerFlow keeps an accurate running picture of your money and your budgets, so financial
-decisions stop being guesswork. It is not an accounting suite — it's a discipline tool. Every
-feature exists to answer five practical questions:
+decisions stop being guesswork. It is not an accounting suite. Every feature exists to answer
+five practical questions:
 
 | The user asks… | LedgerFlow answers with… |
 |---|---|
-| How much money do I have? | Total balance across all accounts |
+| How much money do I have? | Current balances and one total when currencies match |
 | How much did I spend this month? | Monthly expense summary |
 | Where is my money going? | Top spending categories |
 | Am I still within budget? | Per-category budget status |
-| How much can I safely spend? | Remaining budget + daily average |
+| How much budget is left? | Remaining budget by category and overall |
 
-**Success = open the app and understand your financial position in under 10 seconds.**
+**Success = open the app and understand your money situation in under 10 seconds.**
 
 ---
 
@@ -82,7 +82,7 @@ ledgerflow/
 
 Five entities, one mental model:
 
-- **Accounts** — where money lives (cash, bank, e-wallet, savings, credit card). Each has a balance.
+- **Accounts** — where money lives (cash, bank, e-wallet, savings). Each has a balance.
 - **Categories** — what money is for (income: Salary, Freelance; expense: Food, Rent, Transport…).
 - **Transactions** — the core record. Income or expense, tied to one account and one category.
 - **Budgets** — a monthly spending cap on an expense category.
@@ -90,7 +90,7 @@ Five entities, one mental model:
 
 **The critical rule:** a transaction's effect on an account must be **reversed before any edit or
 delete**, or balances drift out of sync. Edits always fully reverse the old version, then apply the
-new one cleanly — never patch a balance incrementally. (See [BRD §6.2](docs/specifications/business-requirements-v2.md).)
+new one cleanly — never patch a balance incrementally. (See [BRD §6.2](docs/specifications/business-requirements-v3.md).)
 
 ---
 
@@ -193,7 +193,7 @@ are explicitly out of Phase 1 scope.
 | Doc | Purpose |
 |---|---|
 | [Documentation index](docs/README.md) | All project documentation grouped by purpose |
-| [Business Requirements (BRD v2)](docs/specifications/business-requirements-v2.md) | Product vision, business logic, and data model |
+| [Business Requirements (BRD v3)](docs/specifications/business-requirements-v3.md) | Product goals, user flows, business rules, and Phase 1 requirements |
 | [Technical Specification (v1)](docs/specifications/technical-specification-v1.md) | Stack, architecture, and delivery phases |
 | [Architecture Guidelines (v1)](docs/specifications/architecture-guidelines-v1.md) | Coding conventions and layering rules |
 | [Database Design (v1)](docs/specifications/database-design-v1.md) | Schema design and balance lifecycle |

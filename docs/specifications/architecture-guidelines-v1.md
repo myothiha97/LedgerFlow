@@ -12,7 +12,7 @@
 
 These are the cross-cutting principles every other section inherits.
 
-1. **Simplicity is the goal, not a consolation.** Build for one user and five entities (LedgerFlow's actual scale), not imagined scale. Complexity must earn its place. This is the same discipline as the BRD's "over-engineering trap" warning.
+1. **Simplicity is the goal, not a consolation.** Build for one user and five entities (LedgerFlow's actual scale), not imagined scale. Complexity must earn its place. This follows the BRD's Phase 1 scope limits.
 2. **Twelve-Factor config.** Store all config in the environment — DB URL, secrets, ports — never in code or committed files. This is what makes the app host-portable (the entire hosting strategy depends on it). `.env.example` documents required keys; real secrets never enter git.
 3. **Conventional Commits.** Use `type(scope): subject` (e.g. `feat(transactions): add reverse-then-apply on edit`). It keeps history readable and makes changelogs/automation trivial later.
 4. **Clarity over cleverness.** Code is read far more than written. Prefer the obvious implementation; leave the clever one for when profiling proves it necessary.

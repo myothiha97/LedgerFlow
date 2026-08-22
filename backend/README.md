@@ -8,7 +8,7 @@
 
 ## Specifications
 
-- [Business requirements v2](specifications/business-requirements-v2.md)
+- [Business requirements v3](../docs/specifications/business-requirements-v3.md)
 - [Technical specification v1](specifications/technical-specification-v1.md)
 - [Architecture guidelines v1](specifications/architecture-guidelines-v1.md)
 - [Database design v1](specifications/database-design-v1.md)

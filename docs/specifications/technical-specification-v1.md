@@ -1,6 +1,6 @@
 # LedgerFlow — Technical Specification (v1)
 
-> **Scope of this document:** This is the _technical_ counterpart to the Business Requirements Document (BRD v2). The BRD defines **what** LedgerFlow is and **why**; this document defines **how** it is built — the stack, repository structure, architecture, local environment, and a phased delivery plan. Where the BRD states business rules (e.g. the balance lifecycle, budget status), this document specifies their implementation.
+> **Scope of this document:** This is the _technical_ counterpart to the Business Requirements Document (BRD v3). The BRD defines **what** LedgerFlow is and **why**; this document defines **how** it is built — the stack, repository structure, architecture, local environment, and a phased delivery plan. Where the BRD states business rules (e.g. the balance lifecycle, budget status), this document specifies their implementation.
 >
 > **Primary goal of Phase 1:** Learning full-stack development with a correct, well-structured codebase. **Phase 3** is where LedgerFlow becomes a real business application.
 
@@ -25,7 +25,7 @@ These principles govern every decision below. When in doubt, defer to them.
 | **Backend language**   | Go                                          | Compiles to a single dependency-free binary; the compiler enforces the service-layer package boundary.                                               |
 | **Backend framework**  | Gin                                         | Fast, mainstream, minimal; makes thin handlers easy.                                                                                                 |
 | **Database**           | PostgreSQL                                  | Relational fit for the entity model; `NUMERIC`/`DECIMAL` for money.                                                                                  |
-| **API style**          | REST (JSON)                                 | Matches the BRD's endpoint design; simple to consume and to test.                                                                                    |
+| **API style**          | REST (JSON)                                 | Supports the BRD's Phase 1 requirements; simple to consume and to test.                                                                               |
 | **Decimal handling**   | `shopspring/decimal`                        | Go has no native decimal type; money must never touch `float64`.                                                                                     |
 | **Frontend build**     | Vite                                        | Fast SPA tooling; outputs a static bundle. No SSR needed (auth-walled app, no SEO surface).                                                          |
 | **Frontend language**  | TypeScript                                  | Non-negotiable for a money app; consumes generated API types.                                                                                        |
@@ -156,7 +156,7 @@ Because Go structs cannot be imported into TypeScript, the contract is defined o
 
 > For a solo Phase 1 app this small, hand-writing the ~5 entity types on the frontend is an acceptable alternative to generation. Decide once; if hand-writing, treat drift as a known maintenance cost.
 
-### 6.1 Endpoint overview (from BRD §10)
+### 6.1 Endpoint overview (supports BRD §10)
 
 ```http
 # Auth
