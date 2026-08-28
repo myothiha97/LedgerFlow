@@ -18,7 +18,8 @@ Backend foundation.
 - PostgreSQL 16 uses the standard `5432:5432` host-to-container mapping.
 - Compose, `.env.example`, the local `.env`, and the Makefile use database name,
   username, and password `ledgerflow` on port `5432`.
-- `docker compose config --quiet` passes and the database container is running.
+- `docker compose config --quiet` passes. The database container was previously verified
+  running, but Docker Desktop was stopped when checked on 2026-08-28.
 - An authenticated `psql` connection through the published host port returns user and
   database `ledgerflow`.
 - The existing volume password was updated without deleting its data.
@@ -45,3 +46,5 @@ None.
 - Database access: `sqlc`
 - Migrations: `golang-migrate`
 - Phase 1 excludes AI features.
+- Frontend implementation starts only after backend and infrastructure readiness gate G1 in
+  `docs/development-plan/README.md` passes.
