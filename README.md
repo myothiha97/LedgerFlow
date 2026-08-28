@@ -131,8 +131,8 @@ make dev
 | `make db-up` / `make db-down` | Start / stop Docker services |
 | `make build` | Compile the server binary to `backend/bin/server` |
 
-> **Note:** the backend is mid-rebuild. The current `backend/main.go` boots a minimal Gin server
-> on `:4000` (`cd backend && go run .`); the `make`-based workflow and `cmd/server` layout above
+> **Note:** the backend is mid-rebuild. The current `backend/cmd/server/main.go` boots a minimal
+> Gin server on `:4000` (`cd backend && go run ./cmd/server`); the `make`-based workflow above
 > describe the target structure being built out per [the Tech Spec](docs/specifications/technical-specification-v1.md).
 
 ---
@@ -193,6 +193,7 @@ are explicitly out of Phase 1 scope.
 | Doc | Purpose |
 |---|---|
 | [Documentation index](docs/README.md) | All project documentation grouped by purpose |
+| [Phase 1 development plan](docs/development-plan/README.md) | Backend-first milestones, quality gates, frontend integration, and acceptance evidence |
 | [Business Requirements (BRD v3)](docs/specifications/business-requirements-v3.md) | Product goals, user flows, business rules, and Phase 1 requirements |
 | [Technical Specification (v1)](docs/specifications/technical-specification-v1.md) | Stack, architecture, and delivery phases |
 | [Architecture Guidelines (v1)](docs/specifications/architecture-guidelines-v1.md) | Coding conventions and layering rules |
