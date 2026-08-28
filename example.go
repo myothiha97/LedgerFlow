@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"slices"
+	"sync"
 )
 
 func slicesExample() {
@@ -61,6 +62,17 @@ func arrayExample() {
 	var a [5]int // initialized the array of len 5
 	fmt.Println("emp 1:", a)
 
+	// a WaitGroup is a counter. Add(1) before starting a goroutine, Done() when
+	// it finishes, and Wait() blocks until the counter is back to 0. Without it
+	// arrayExample can return before the goroutine ever gets scheduled.
+	var wg sync.WaitGroup
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		fmt.Println("a go routine test funtion ")
+	}()
+
 	a[4] = 100
 	// fmt.Println("set:", a)
 	// fmt.Println("get:", a[4])
@@ -86,7 +98,8 @@ func arrayExample() {
 	// if we assigned only one var from range b , then i indicate the index of each looping
 	// but if assigned to two var, the both first one indicate the index and 2nd one indicate the value of index in looping
 	for i := range b {
-		fmt.Println(i)
+		c := i + 1
+		fmt.Println(i, c)
 	}
 
 	// fmt.Println("2d: ", twoD)
@@ -96,6 +109,8 @@ func arrayExample() {
 		{1, 2, 3, 4},
 	}
 	fmt.Println("twoD", twoD)
+
+	wg.Wait() // block here until the goroutine above has called Done()
 }
 
 func main() {
