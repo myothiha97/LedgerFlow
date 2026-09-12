@@ -119,7 +119,7 @@ store/service method takes `ctx` first.
 This one request touches six files. Following it is the fastest way to understand how the
 layers connect. Each hop shows the **key idea**, not the full code.
 
-### Hop 0 — Startup wiring · `cmd/server/main.go`
+### Hop 0 — Startup wiring · `server/main.go`
 Before any request, `main` builds the object graph by hand (this is dependency injection):
 ```go
 pool, err := store.NewPool(ctx, cfg.DatabaseURL) // open DB pool
@@ -248,7 +248,7 @@ yourself; ask for review.
 | 8 | `internal/service/auth.go` | `AuthStore` interface + `Register` (bcrypt, normalize, wrap errors) | Guidelines §2.2 |
 | 9 | `internal/service/auth_test.go` | table-driven test of `Register` with a mock store (AAA) | Guidelines §9 |
 | 10 | `internal/handler/` | `health`, `auth` (register), `router` (all routes), `middleware` skeleton | Guidelines §4 |
-| 11 | `cmd/server/main.go` | wiring only: config → pool → store → service → router → serve | Guidelines §3.6 |
+| 11 | `server/main.go` | wiring only: config → pool → store → service → router → serve | Guidelines §3.6 |
 
 **The mechanical 20% I can still generate for you on request** (no Go-learning value in
 hand-typing these): `go.mod`, `Dockerfile`, `docker-compose.yml`, `Makefile`, `.env.example`,

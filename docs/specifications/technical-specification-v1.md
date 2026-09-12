@@ -49,9 +49,8 @@ A single git repository (monorepo) with two **sibling** top-level folders. Go an
 ```text
 ledgerflow/
 ├── backend/                    # Go module — go.mod lives HERE (not at root)
-│   ├── cmd/
-│   │   └── server/
-│   │       └── main.go         # wiring only: config, router, DB, start
+│   ├── server/
+│   │   └── main.go             # wiring only: config, router, DB, start
 │   ├── internal/
 │   │   ├── handler/            # thin Gin handlers: parse → call service → respond
 │   │   ├── service/            # THE business logic (BRD §12)
@@ -98,7 +97,7 @@ flowchart TD
     ST --> DB[(PostgreSQL)]
 ```
 
-- **`cmd/server`** — wiring only. Loads config, builds the router, opens the DB pool, starts the server. No logic.
+- **`server/`** — wiring only. Loads config, builds the router, opens the DB pool, starts the server. No logic.
 - **`handler/`** — one responsibility: translate HTTP ↔ service calls. Parse and validate request shape (Gin binding via struct tags is fine here for _shape_ validation), call a service function, map the result/error to an HTTP response. No business rules.
 - **`service/`** — all business logic: `CreateTransaction`, `UpdateTransaction`, `DeleteTransaction`, `RecalcBalance`, `BudgetStatus`, `DashboardSummary`, etc. **Business validation lives here, not in handlers**, so the Phase 2 AI caller gets the same rules.
 - **`domain/`** — entities, the money/decimal type, and the lifecycle rules. Pure, framework-free.

@@ -69,7 +69,7 @@ This table records the repository state found on 2026-08-28.
 | --- | --- | --- |
 | Git | `main` matches `origin/main`; unrelated local edits exist in `example.go` | Preserve the local edit |
 | Go module | `backend/go.mod`, Go 1.26.4, Gin 1.12.0 | Done |
-| API process | `backend/cmd/server/main.go` serves `GET /ping`; port defaults to 4000 | Minimal foundation |
+| API process | `backend/server/main.go` serves `GET /ping`; port defaults to 4000 | Minimal foundation |
 | Go checks | Test, vet, and build pass | Verified, but there are no test files |
 | Local database config | PostgreSQL 16 Compose service uses `ledgerflow` credentials and port 5432 | Configured |
 | Database runtime | Docker Desktop is currently stopped | Live database state not reverified |

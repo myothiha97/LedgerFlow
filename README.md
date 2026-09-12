@@ -63,7 +63,7 @@ A monorepo with two independently-tooled sibling projects (Go and JS don't share
 ```text
 ledgerflow/
 ├── backend/              # Go module (go.mod lives here, not at root)
-│   ├── cmd/server/       # wiring only: config, router, DB, start
+│   ├── server/           # wiring only: config, router, DB, start
 │   └── internal/
 │       ├── handler/      # thin Gin handlers: parse → call service → respond
 │       ├── service/      # the business logic (balance lifecycle, budget status…)
@@ -131,8 +131,8 @@ make dev
 | `make db-up` / `make db-down` | Start / stop Docker services |
 | `make build` | Compile the server binary to `backend/bin/server` |
 
-> **Note:** the backend is mid-rebuild. The current `backend/cmd/server/main.go` boots a minimal
-> Gin server on `:4000` (`cd backend && go run ./cmd/server`); the `make`-based workflow above
+> **Note:** the backend is mid-rebuild. The current `backend/server/main.go` boots a minimal
+> Gin server on `:4000` (`cd backend && go run ./server`); the `make`-based workflow above
 > describe the target structure being built out per [the Tech Spec](docs/specifications/technical-specification-v1.md).
 
 ---

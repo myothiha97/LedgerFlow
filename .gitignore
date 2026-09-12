@@ -3,9 +3,8 @@
 *.env
 !.env.example
 
-# Go build artifacts
+# Go build artifacts (binaries only go to backend/bin/ — backend/server/ is source)
 /backend/bin/
-/backend/server
 /backend/tmp/
 *.test
 *.out

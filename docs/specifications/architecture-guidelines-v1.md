@@ -42,7 +42,7 @@ LedgerFlow's backend follows a layered (lightweight clean-architecture) design. 
 3. **Accept interfaces, return structs.** Services accept the `store` interface; constructors return concrete types. Keep interfaces small and defined by the *consumer*, not the implementer.
 4. **`context.Context` is the first parameter** on any function doing I/O (DB calls, future HTTP/LLM calls). Thread it from the Gin handler down through service to store so cancellation and timeouts work.
 5. **Table-driven tests** for service logic (see §9). The balance-lifecycle rules are the highest-value thing to test this way.
-6. **Keep `main.go` thin.** `cmd/server/main.go` is wiring only: load config, open the DB pool, build the router, start the server. No business logic, ever.
+6. **Keep `main.go` thin.** `server/main.go` is wiring only: load config, open the DB pool, build the router, start the server. No business logic, ever.
 
 > **Source / further reading:** [Effective Go](https://go.dev/doc/effective_go) · [Uber Go Style Guide](https://github.com/uber-go/guide/blob/master/style.md) · [Google Go Style Guide](https://google.github.io/styleguide/go/index) · [Go Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments) · [Clean Go Code](https://github.com/Pungyeon/clean-go-article)
 

@@ -5,8 +5,8 @@ root = "."
 tmp_dir = "tmp"
 
 [build]
-  # Build the root package (main.go lives here, not in ./cmd/server).
-  cmd = "go build -o ./tmp/server ."
+  # Build the main package in ./server (main.go lives there, not at the module root).
+  cmd = "go build -o ./tmp/server ./server"
   bin = "./tmp/server"
   # Watch these extensions; rebuild on change.
   include_ext = ["go"]

@@ -7,7 +7,7 @@ Backend foundation.
 ## Verified Completed
 
 - The Go module root is `backend/`.
-- The API executable remains at `backend/cmd/server/main.go`.
+- The API executable remains at `backend/server/main.go`.
 - `make test` passes. There are currently no Go tests.
 - `make build` passes and produces the ignored `backend/bin/server` binary.
 - The server reads `PORT` from the environment and defaults to `4000`.
@@ -42,7 +42,7 @@ None.
 ## Locked Decisions
 
 - Backend module root: `backend/`
-- Executable entry point: `backend/cmd/server/`
+- Executable entry point: `backend/server/`
 - Database access: `sqlc`
 - Migrations: `golang-migrate`
 - Phase 1 excludes AI features.

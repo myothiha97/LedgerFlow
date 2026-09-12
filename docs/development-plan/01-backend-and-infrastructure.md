@@ -74,7 +74,7 @@ business logic.
 5. Add router construction under `backend/internal/handler/`.
 6. Add a liveness endpoint that proves the process is running and a readiness endpoint that
    proves PostgreSQL is reachable.
-7. Keep `backend/cmd/server/main.go` limited to configuration, dependency wiring, server
+7. Keep `backend/server/main.go` limited to configuration, dependency wiring, server
    startup, signal handling, and graceful shutdown.
 8. Set explicit HTTP read, write, idle, and shutdown timeouts.
 9. Replace `/ping` only after the new health endpoints are verified.

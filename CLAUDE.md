@@ -224,11 +224,11 @@ facts that improve coaching behavior.
 
 ## Project Structure & Module Organization
 
-LedgerFlow is a personal-finance project for learning Go and backend architecture through incremental implementation. The current code is a minimal Gin API in `backend/cmd/server/main.go`; the Go module lives in `backend/`. Requirements and learning notes live in `docs/`.
+LedgerFlow is a personal-finance project for learning Go and backend architecture through incremental implementation. The current code is a minimal Gin API in `backend/server/main.go`; the Go module lives in `backend/`. Requirements and learning notes live in `docs/`.
 
 As the backend grows, follow the documented layout:
 
-- `backend/cmd/server/`: startup wiring only
+- `backend/server/`: startup wiring only
 - `backend/internal/handler/`: parse HTTP requests and format responses
 - `backend/internal/service/`: all business rules
 - `backend/internal/domain/`: framework-free entities and errors
@@ -243,7 +243,7 @@ Assume the owner is new to Go and backend development. Explain unfamiliar patter
 
 ## Build, Test, and Development Commands
 
-- `cd backend && go run ./cmd/server`: run the current API. It reads `PORT` from the
+- `cd backend && go run ./server`: run the current API. It reads `PORT` from the
   environment and defaults to port 4000.
 - `make test`: run all Go tests with `go test ./...`.
 - `make tidy`: synchronize `backend/go.mod` and `go.sum`.
