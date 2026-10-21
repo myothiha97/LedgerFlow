@@ -209,6 +209,17 @@ Place tests beside source files as `*_test.go` and name them `TestFunction_Scena
 
 Use Conventional Commits, matching repository history: `feat(backend): add account service`, `fix(transactions): preserve balances`, or `docs: clarify setup`. Keep commits and pull requests focused. PRs should explain behavior changes, link an issue when applicable, list verification commands, and include screenshots for future UI changes. Never commit `.env` or credentials.
 
+Never run `git commit` or `git push` unless the owner explicitly says to commit or push in
+that moment. When work is ready, suggest the commit message and stop. Approval for one
+commit does not cover later ones.
+
+Commits are atomic: one concern per commit, each a working state. Never pack many
+unrelated changes into one commit. When the owner asks for commits, also update the
+Claude memory for this project (`~/.claude-memory/projects/<this repo>/`, at least the
+quick facts and status notes) and any affected global memory (`~/.claude-memory/global/`)
+in the same turn, so later questions about the project can be answered without
+re-exploring the repo.
+
 ## Communication and Explanation Style
 
 When explaining technical topics, concepts, code, architecture, or logic:

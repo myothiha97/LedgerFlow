@@ -183,7 +183,8 @@ Testing and code quality
 - Table-driven tests named `TestThing_Scenario`. Every BRD rule gets at least one test that
   names the rule it proves.
 - `gofmt`, `go vet`, and `go test -race` pass. Errors are wrapped with `%w` and context.
-- One focused Conventional Commit per finished piece of work.
+- One focused Conventional Commit per finished piece of work, made only when the owner
+  says to commit (see `CLAUDE.md`).
 
 ## Day by day
 
