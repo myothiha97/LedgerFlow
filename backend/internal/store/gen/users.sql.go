@@ -75,29 +75,18 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 const deleteSession = `-- name: DeleteSession :exec
 DELETE FROM sessions
 WHERE token_hash = $1
+  AND user_id = $2
 `
 
-func (q *Queries) DeleteSession(ctx context.Context, tokenHash string) error {
-	_, err := q.db.Exec(ctx, deleteSession, tokenHash)
-	return err
+type DeleteSessionParams struct {
+	TokenHash string
+	UserID    pgtype.UUID
 }
 
-const getSessionByTokenHash = `-- name: GetSessionByTokenHash :one
-SELECT id, user_id, token_hash, expires_at, created_at FROM sessions
-WHERE token_hash = $1
-`
-
-func (q *Queries) GetSessionByTokenHash(ctx context.Context, tokenHash string) (Session, error) {
-	row := q.db.QueryRow(ctx, getSessionByTokenHash, tokenHash)
-	var i Session
-	err := row.Scan(
-		&i.ID,
-		&i.UserID,
-		&i.TokenHash,
-		&i.ExpiresAt,
-		&i.CreatedAt,
-	)
-	return i, err
+// DeleteSession removes a session only when it belongs to the given user.
+func (q *Queries) DeleteSession(ctx context.Context, arg DeleteSessionParams) error {
+	_, err := q.db.Exec(ctx, deleteSession, arg.TokenHash, arg.UserID)
+	return err
 }
 
 const getUserByEmail = `-- name: GetUserByEmail :one
@@ -134,6 +123,41 @@ func (q *Queries) GetUserByID(ctx context.Context, id pgtype.UUID) (User, error)
 		&i.PasswordHash,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const getValidSessionWithUser = `-- name: GetValidSessionWithUser :one
+SELECT
+    sessions.id, sessions.user_id, sessions.token_hash, sessions.expires_at, sessions.created_at,
+    users.name,
+    users.email
+FROM sessions
+JOIN users ON users.id = sessions.user_id
+WHERE sessions.token_hash = $1
+  AND sessions.expires_at > now()
+`
+
+type GetValidSessionWithUserRow struct {
+	Session Session
+	Name    string
+	Email   string
+}
+
+// GetValidSessionWithUser returns an unexpired session and the user who owns it.
+// The database clock decides expiry, so the app and database never disagree on "now".
+// Only safe user columns are selected; password_hash never leaves this query.
+func (q *Queries) GetValidSessionWithUser(ctx context.Context, tokenHash string) (GetValidSessionWithUserRow, error) {
+	row := q.db.QueryRow(ctx, getValidSessionWithUser, tokenHash)
+	var i GetValidSessionWithUserRow
+	err := row.Scan(
+		&i.Session.ID,
+		&i.Session.UserID,
+		&i.Session.TokenHash,
+		&i.Session.ExpiresAt,
+		&i.Session.CreatedAt,
+		&i.Name,
+		&i.Email,
 	)
 	return i, err
 }

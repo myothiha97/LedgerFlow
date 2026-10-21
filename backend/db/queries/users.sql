@@ -1,5 +1,3 @@
--- todo: in future need to enhance nvim color highlight for *.sql files 
-
 -- name: CreateUser :one
 INSERT INTO users (
     name,
@@ -28,10 +26,21 @@ INSERT INTO sessions (
 )
 RETURNING *;
 
--- name: GetSessionByTokenHash :one
-SELECT * FROM sessions
-WHERE token_hash = $1;
+-- GetValidSessionWithUser returns an unexpired session and the user who owns it.
+-- The database clock decides expiry, so the app and database never disagree on "now".
+-- Only safe user columns are selected; password_hash never leaves this query.
+-- name: GetValidSessionWithUser :one
+SELECT
+    sqlc.embed(sessions),
+    users.name,
+    users.email
+FROM sessions
+JOIN users ON users.id = sessions.user_id
+WHERE sessions.token_hash = sqlc.arg(token_hash)
+  AND sessions.expires_at > now();
 
+-- DeleteSession removes a session only when it belongs to the given user.
 -- name: DeleteSession :exec
 DELETE FROM sessions
-WHERE token_hash = $1;
+WHERE token_hash = sqlc.arg(token_hash)
+  AND user_id = sqlc.arg(user_id);
