@@ -32,8 +32,7 @@ When a session starts:
 3. Keep attention on this order: current objective, small implementation step, verify,
    next step.
 4. Explain only the Go or backend concept needed for the immediate step.
-5. Give the owner a meaningful part to predict, write, or decide when it supports
-   learning. Scaffold boilerplate when that keeps momentum.
+5. Build the day's work, leaving the owner the day's exercise (see Momentum Mode).
 6. Verify quickly with the smallest useful test, build, request, or database check.
 7. End with exactly these handoff fields: `Completed`, `Next`, and `Blocked by`.
 
@@ -41,9 +40,8 @@ Choose work that can produce visible evidence in about 25 minutes when possible.
 normal session may continue for 60 to 90 minutes, but never create pressure to repay
 lost time. Do not present a large roadmap unless explicitly requested.
 
-When a session ends, update `docs/SESSION_STATE.md` and write a concise dated entry in
-`docs/sessions/`. Record the objective, meaningful activities, verified results,
-concepts practiced, next outcome, and blockers. Do not store a transcript.
+When a session ends, update `backend/SESSION_STATE.md` and write the day lesson
+described in Momentum Mode. Do not store a transcript.
 
 ## Anti-Procrastination and Scope Control
 
@@ -91,96 +89,41 @@ Keep the work interesting through visible progress, not extra scope. Use realist
 LedgerFlow examples such as balances, accounts, categories, and transactions. Avoid
 sending the owner to broad tutorials when the concept can be learned while building.
 
-Let the owner write concept-rich service and domain logic when feasible. The agent may
-handle repetitive setup, provide a small scaffold, diagnose errors, write supporting
-tests, and review code. Never leave the repository broken merely to create a learning
-exercise.
+In Momentum Mode the agent writes most code and leaves one concept-rich exercise per
+day. Never leave the repository broken merely to create a learning exercise.
 
-### Discovery-First Coaching
+### Momentum Mode (active from 2026-10-21)
 
-Do not give exact commands or complete code as the default first response to an
-implementation step. Give the owner:
+The owner lost momentum after a long, hard period and is rebuilding it. Until v0.1.0
+ships, follow `docs/development-plan/10-day-plan.md`. It replaces the discovery-first
+coaching and the B1 to F7 gate order that were used before.
 
-- the concrete goal
-- why it matters now
-- the relevant file or area
-- one or two hints or API names
-- constraints and likely footguns
-- observable acceptance criteria
-
-Present each new implementation step in this compact format:
-
-1. Objective and why it matters now
-2. `Your step`, including the relevant files and precise technical requirements
-3. `Key context`, combining only the tools, concepts, constraints, and likely footguns
-   needed to begin without repeating the task requirements
-4. Focused local or official references for self-directed learning
-5. `Done means`, with observable acceptance criteria and a request to send the attempt
-   for review
-
-#### Where the step is written
-
-A step is a **file**, not chat output. Write it to `backend/tasks/<n>.md` so the owner can
-reopen it, and so the active objective survives a lost session or a switch between agents.
-Do not print the step in chat instead of writing the file.
-
-Use exactly these five headings, at level `##`, in this order. Never `###`.
-
-```markdown
-## Objective: <one line ending in a period>.
-
-<one short paragraph on why this is the best next step right now>
-
-## Your step
-
-- <bullets: files to create or change, and precise technical requirements>
-
-## Key context
-
-<short prose: the tools, concepts, dependencies, and footguns needed to begin.
-Do not restate the requirements from Your step.>
-
-## References
-
-- Local guide or spec, with the section or row number
-- Focused official documentation links
-
-## Done means
-
-<observable acceptance criteria, then a request to send the attempt for review>
-```
-
-Numbering is sequential per objective (`1.md`, `2.md`, ...). Keep the same number while an
-objective is open; advance only after the current one is reviewed and finished.
-
-Rules for the file content:
-
-- Verify every path named under `## References` actually exists before writing the file.
-  Doc paths in this repo have moved before and dead references waste the owner's time.
-- Point at a spec section rather than restating it. If the columns or rules already live in
-  `docs/specifications/`, cite the section and say to follow it.
-- Footguns must come from the repository's real current state, not generic advice. Inspect
-  first, then write.
-- No exact commands and no working code in the file. Discovery-first still governs.
-
-Be precise about the required outcome, files, data shape, and technical constraints, but
-leave the commands and implementation syntax for the owner to discover. Provide exact
-commands or code only when requested, after repeated blocking, or when needed for safety.
-
-Let the owner inspect official documentation, research narrowly, attempt the work, and
-encounter normal errors. Then review the attempt and error output. Reveal help in this
-order:
-
-1. Goal and expected result
-2. Small conceptual hint
-3. Relevant symbol, package, or official documentation area
-4. Pseudocode or partial example
-5. Exact command or code only when requested, after repeated blocking, or when needed
-   for safety
-
-Keep research tied to the active step. If it becomes open-ended or exceeds about 15
-minutes without evidence of progress, ask for the current attempt or error and narrow
-the problem. Do not turn discovery-first learning into abandonment.
+- Claude writes about 90% of the code, backend and frontend, following the plan's
+  "Engineering standards" section. The owner writes about 10% as the day's exercise.
+- Mark the exercise in code with `TODO(you)`. The stub must compile and fail clearly
+  (for example a "not implemented" error or a skipped test), so the repo stays green.
+- Pick exercises that are small and concept-rich: one rule, one query, one handler, or
+  one test case. Never boilerplate.
+- When the owner sends the exercise, review it: what is correct, what must change, why.
+- At the end of each day, write a short lesson to `docs/learning/days/day-NN.md` and
+  give a brief version in chat. Cover: what was built, how it works, patterns or design
+  used (only if used), backend skills practiced, where to learn more (one or two focused
+  links), and the exercise with its "done means". Keep it short and beginner friendly.
+- Follow the plan's "Daily build and verify loop" every day: ground uncertain APIs and
+  best practices in official docs or a web search, review each day's diff with up to
+  three fresh-context sub agents (correctness, security and best practices, tests), fix
+  confirmed findings, then pass the full verify gate (`make check`, integration tests,
+  migrations, `curl` smoke test). Record the gate output in the day lesson. Never claim
+  a day is done without that evidence.
+- Pick each sub agent's model by task, following the plan's "Model choice for sub
+  agents" table: Haiku for search and running checks, Sonnet for most building and
+  reviews, Opus only for the transaction, money, and auth-security work. Never use
+  Fable (it needs separate API pricing). The owner is on a limited plan, so never
+  default every agent to Opus.
+- Use the project skill `.claude/skills/diagnosing-bugs` for any hard bug or failing
+  check whose cause is not obvious.
+- Do not create new planning docs or task files until v0.1.0 ships. `backend/tasks/` is
+  historical.
 
 ## Engineering Partnership Rules
 
@@ -239,7 +182,7 @@ Dependencies must point inward: handler to service to store/domain. Never place 
 
 ## Learning-First Contributions
 
-Assume the owner is new to Go and backend development. Explain unfamiliar patterns, their purpose, and trade-offs in plain language. Prefer small steps and standard Go practices over large generated implementations or premature abstractions. Let the owner write core service logic.
+Assume the owner is new to Go and backend development. Explain unfamiliar patterns, their purpose, and trade-offs in plain language. Prefer standard Go practices over premature abstractions.
 
 ## Build, Test, and Development Commands
 

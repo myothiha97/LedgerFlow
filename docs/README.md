@@ -4,13 +4,13 @@ Use the documents in this order when building Phase 1.
 
 ## Development plan
 
-1. [Master development plan](development-plan/README.md)
-2. [Backend and infrastructure plan](development-plan/01-backend-and-infrastructure.md)
-3. [Frontend integration and release plan](development-plan/02-frontend-integration-and-release.md)
-4. [Requirements traceability and verification](development-plan/03-requirements-traceability.md)
+1. [10-day plan (active)](development-plan/10-day-plan.md)
+2. [Master development plan](development-plan/README.md) (reference)
+3. [Backend and infrastructure plan](development-plan/01-backend-and-infrastructure.md) (reference)
+4. [Frontend integration and release plan](development-plan/02-frontend-integration-and-release.md) (reference)
+5. [Requirements traceability and verification](development-plan/03-requirements-traceability.md) (reference)
 
-The master plan controls the delivery order. Frontend work starts only after the backend
-and infrastructure readiness gate passes.
+The 10-day plan controls the delivery order until v0.1.0 ships.
 
 ## Specifications
 
@@ -22,7 +22,8 @@ and infrastructure readiness gate passes.
 ## Current work
 
 - [Current backend state](../backend/SESSION_STATE.md)
-- [Backend task files](../backend/tasks/)
+- [Daily lessons](learning/days/)
+- [Backend task files](../backend/tasks/) (historical)
 - [Session history](sessions/)
 
 ## Guides and learning

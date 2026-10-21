@@ -337,6 +337,9 @@ Phase 1 includes no AI features or AI setup.
 
 ## 13. Decisions Still Needed
 
+> **Decided for v0.1.0 on 2026-10-21.** The choices are recorded as D1 to D6 in
+> [the 10-day plan](../development-plan/10-day-plan.md#decisions-locked-for-v010).
+
 These choices were unclear in v2. They must be settled before the related features are
 built:
 

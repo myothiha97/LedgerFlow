@@ -1,5 +1,8 @@
 # LedgerFlow Phase 1 Development Plan
 
+> **Superseded for v0.1.0 (2026-10-21):** follow the [10-day plan](10-day-plan.md).
+> This file stays as reference for rules, risks, and test ideas.
+
 > Status: Active
 >
 > Baseline date: 2026-08-28
