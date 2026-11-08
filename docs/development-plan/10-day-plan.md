@@ -47,7 +47,9 @@ outside BRD Section 4 "Included" is added as a product feature.
 Every day runs these steps in order. A day is not done until step 5 has evidence.
 
 1. **Ground.** Read the BRD rules and plan items for the day. When a library API, standard,
+
    or best practice is uncertain, check official docs or the web first. Do not guess.
+
 2. **Build.** Claude implements the day's work, inner layers first: migration, domain,
    store, service, handler, wiring. Independent parts may be built by parallel sub agents.
 3. **Review with fresh eyes.** Up to three sub agents, started without the builder's
@@ -63,6 +65,7 @@ Every day runs these steps in order. A day is not done until step 5 has evidence
 
    Keep the reports separate. A diff can follow every standard and still build the wrong
    thing, so one report must not hide the other.
+
 4. **Fix.** Every confirmed finding is fixed or recorded with a reason. Unconfirmed findings
    are checked again, not ignored.
 5. **Verify gate.** All of these must pass, and the output is recorded in the day lesson:
@@ -79,12 +82,12 @@ Every day runs these steps in order. A day is not done until step 5 has evidence
 The owner is on a limited plan, so each sub agent uses the cheapest model that does the
 job well. Never default every agent to Opus.
 
-| Model | Use it for |
-| --- | --- |
-| Haiku | Searching the repo, checking that paths and links exist, running the verify gate and summarizing its output, simple mechanical edits |
+| Model  | Use it for                                                                                                                                   |
+| ------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Haiku  | Searching the repo, checking that paths and links exist, running the verify gate and summarizing its output, simple mechanical edits         |
 | Sonnet | Most building (CRUD store, queries, handlers, wiring, Docker, CI, frontend pages), test writing, the security and test reviews, web research |
-| Opus | The hard parts: the transaction and balance lifecycle, locking, money math, auth security, and the correctness review on Days 6 to 8 |
-| Fable | Never used. It needs separate API pricing. |
+| Opus   | The hard parts: the transaction and balance lifecycle, locking, money math, auth security, and the correctness review on Days 6 to 8         |
+| Fable  | Never used. It needs separate API pricing.                                                                                                   |
 
 To keep token use low:
 
@@ -97,18 +100,18 @@ To keep token use low:
 
 These settle every open item in BRD Section 13.
 
-| ID | Decision | BRD |
-| --- | --- | --- |
-| D1 | Account types: `cash`, `bank`, `ewallet`, `savings`. No credit cards. | §5, §13.1 |
-| D2 | One currency per user. The first account sets it; every later account must use the same uppercase ISO 4217 code. So the dashboard always shows one total. Reason: budgets and category totals add expenses from all accounts, and mixed currencies would make them wrong. | §6.5, §13.2 |
-| D3 | New users get starter categories on register. Income: Salary, Other Income. Expense: Food, Transport, Rent, Utilities, Shopping, Health, Entertainment, Other. | §8, §13.3 |
-| D4 | An account can be archived only when its current balance is zero. | §13.4 |
-| D5 | The UI and API say "budget remaining", never "safe to spend". | §13.5 |
-| D6 | Future-dated transactions are rejected. "Today" uses the app timezone (D9). | §13.6 |
-| D7 | No OpenAPI codegen for v0.1.0. The frontend uses small hand-written TypeScript types. | none |
-| D8 | Server-side sessions: random token in an `HttpOnly` cookie, only its SHA-256 hash in the database. Passwords use bcrypt. A session lasts 30 days. | §7, AUTH-01 |
-| D9 | One app timezone from the `APP_TIMEZONE` env var decides "today" and month boundaries. | §6.5 |
-| D11 | Money is `NUMERIC(19,4)` in SQL, `decimal.Decimal` in Go, and a string in JSON. Budget status is decided from the exact percentage. Rounding to 1 decimal place is for display only, so 70.04% is still "caution". | §6.4 |
+| ID  | Decision                                                                                                                                                                                                                                                                  | BRD         |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| D1  | Account types: `cash`, `bank`, `ewallet`, `savings`. No credit cards.                                                                                                                                                                                                     | §5, §13.1   |
+| D2  | One currency per user. The first account sets it; every later account must use the same uppercase ISO 4217 code. So the dashboard always shows one total. Reason: budgets and category totals add expenses from all accounts, and mixed currencies would make them wrong. | §6.5, §13.2 |
+| D3  | New users get starter categories on register. Income: Salary, Other Income. Expense: Food, Transport, Rent, Utilities, Shopping, Health, Entertainment, Other.                                                                                                            | §8, §13.3   |
+| D4  | An account can be archived only when its current balance is zero.                                                                                                                                                                                                         | §13.4       |
+| D5  | The UI and API say "budget remaining", never "safe to spend".                                                                                                                                                                                                             | §13.5       |
+| D6  | Future-dated transactions are rejected. "Today" uses the app timezone (D9).                                                                                                                                                                                               | §13.6       |
+| D7  | No OpenAPI codegen for v0.1.0. The frontend uses small hand-written TypeScript types.                                                                                                                                                                                     | none        |
+| D8  | Server-side sessions: random token in an `HttpOnly` cookie, only its SHA-256 hash in the database. Passwords use bcrypt. A session lasts 30 days.                                                                                                                         | §7, AUTH-01 |
+| D9  | One app timezone from the `APP_TIMEZONE` env var decides "today" and month boundaries.                                                                                                                                                                                    | §6.5        |
+| D11 | Money is `NUMERIC(19,4)` in SQL, `decimal.Decimal` in Go, and a string in JSON. Budget status is decided from the exact percentage. Rounding to 1 decimal place is for display only, so 70.04% is still "caution".                                                        | §6.4        |
 
 The frontend calls the API through the Vite dev proxy, so the browser sees one origin.
 That means no CORS setup is needed locally.
@@ -315,28 +318,29 @@ Testing and code quality
   data, so no reload is ever needed (BRD §6.3). For fast daily entry (BRD §2), "add
   transaction" is one tap away on every screen, defaults to today and the last-used
   account, and every page works at phone width. README setup steps are included.
+
 - You: run the acceptance checklist below yourself, then tag `v0.1.0`.
 - Done means: every checklist item passes.
 
 ## BRD coverage
 
-| BRD ID | Built on | Proven by |
-| --- | --- | --- |
+| BRD ID  | Built on      | Proven by                                                  |
+| ------- | ------------- | ---------------------------------------------------------- |
 | AUTH-01 | Days 2, 3, 10 | Service tests, `curl` flow, browser reload stays signed in |
-| AUTH-02 | Days 3 to 8 | Two-user test on every resource returns 404 |
-| ACC-01 | Day 4 | Create test with all fields and D1, D2 rules |
-| ACC-02 | Days 4, 6 | Starting balance edit test, type and currency lock test |
-| ACC-03 | Day 4 | Archive test (D4) and history still readable |
-| CAT-01 | Days 5, 6, 8 | Create and edit tests, type lock tests |
-| CAT-02 | Day 5 | Archive test, past transactions unchanged |
-| TXN-01 | Day 6 | BRD §6.1 validation table test |
-| TXN-02 | Day 7 | Filter tests for each filter and combined |
-| TXN-03 | Day 7 | BRD §6.2 example test, reconciliation test |
-| BUD-01 | Day 8 | Create, edit, delete, duplicate month tests |
-| BUD-02 | Day 8 | Status boundary tests, negative remaining test |
-| DASH-01 | Days 8, 10 | Dashboard test against direct SQL totals |
-| DASH-02 | Days 8, 10 | Status moves both ways after edits; UI refetch |
-| DATA-01 | Days 6, 7, 9 | Forced-failure rollback tests, idempotent retry test |
+| AUTH-02 | Days 3 to 8   | Two-user test on every resource returns 404                |
+| ACC-01  | Day 4         | Create test with all fields and D1, D2 rules               |
+| ACC-02  | Days 4, 6     | Starting balance edit test, type and currency lock test    |
+| ACC-03  | Day 4         | Archive test (D4) and history still readable               |
+| CAT-01  | Days 5, 6, 8  | Create and edit tests, type lock tests                     |
+| CAT-02  | Day 5         | Archive test, past transactions unchanged                  |
+| TXN-01  | Day 6         | BRD §6.1 validation table test                             |
+| TXN-02  | Day 7         | Filter tests for each filter and combined                  |
+| TXN-03  | Day 7         | BRD §6.2 example test, reconciliation test                 |
+| BUD-01  | Day 8         | Create, edit, delete, duplicate month tests                |
+| BUD-02  | Day 8         | Status boundary tests, negative remaining test             |
+| DASH-01 | Days 8, 10    | Dashboard test against direct SQL totals                   |
+| DASH-02 | Days 8, 10    | Status moves both ways after edits; UI refetch             |
+| DATA-01 | Days 6, 7, 9  | Forced-failure rollback tests, idempotent retry test       |
 
 ## Acceptance checklist (v0.1.0)
 

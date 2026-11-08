@@ -1,0 +1,23 @@
+# golangci-lint v2 config. Run with `make lint` or as part of `make check`.
+version: "2"
+
+linters:
+  # "standard" = errcheck, govet, ineffassign, staticcheck, unused.
+  default: standard
+  enable:
+    - bodyclose # HTTP response bodies are closed
+    - errorlint # errors are compared with errors.Is / errors.As
+    - gosec # common security mistakes
+    - misspell
+    - noctx # HTTP requests carry a context
+    - sqlclosecheck # rows and statements are closed
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    goimports:
+      # Keeps this module's imports in their own group, after third-party ones.
+      local-prefixes:
+        - ledgerflow/backend

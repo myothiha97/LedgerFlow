@@ -3,10 +3,14 @@
 # $(go env GOPATH)/bin is on your PATH).
 BACKEND := backend
 MIGRATIONS := $(BACKEND)/db/migrations
-# Read from your shell env / .env; falls back to the local docker-compose DSN.
+# Load .env when it exists. Its values OVERRIDE shell env vars (make rule), so edit .env
+# rather than prefixing `PORT=... make dev`. Make parses it: no quotes and no `$` in values.
+-include .env
 DATABASE_URL ?= postgres://ledgerflow:ledgerflow@localhost:5432/ledgerflow?sslmode=disable
+# Pass the settings the server reads (internal/config) to every command.
+export PORT APP_ENV DATABASE_URL
 
-.PHONY: dev watch build test generate tidy db-up db-down migrate-up migrate-down
+.PHONY: dev watch build test lint vuln check generate tidy db-up db-down migrate-up migrate-down
 
 dev: ## Run the API on the host (Postgres must be up: make db-up)
 	cd $(BACKEND) && go run ./server
@@ -19,6 +23,16 @@ build: ## Compile the server binary to backend/bin/server
 
 test: ## Run all Go tests
 	cd $(BACKEND) && go test ./...
+
+lint: ## Run golangci-lint (formatters + linters, config in backend/.golangci.yml)
+	cd $(BACKEND) && golangci-lint fmt --diff && golangci-lint run ./...
+
+vuln: ## Check dependencies for known vulnerabilities (go install golang.org/x/vuln/cmd/govulncheck@latest)
+	cd $(BACKEND) && govulncheck ./...
+
+check: lint ## The verify gate: lint, vet, build, race tests, vulnerability scan
+	cd $(BACKEND) && go vet ./... && go build ./... && go test -race ./...
+	$(MAKE) vuln
 
 generate: ## Regenerate type-safe Go from SQL (sqlc)
 	cd $(BACKEND) && sqlc generate
